@@ -47,21 +47,21 @@ app.post('/api/users/:_id/exercises', (req, res) => {
   const exerciseDate = date ? new Date(date) : new Date();
 
   const exercise = {
-    userId,
-    description,
+    username: user.username,
+    description: description,
     duration: parseInt(duration),
-    date: exerciseDate.toDateString() // Convert date to a readable format
+    date: exerciseDate.toDateString(),
+    _id: user._id
   };
 
-  exercises.push(exercise);
-
-  res.json({
-    _id: user._id,
-    username: user.username,
+  exercises.push({
+    userId: user._id,
     description: exercise.description,
     duration: exercise.duration,
     date: exercise.date
   });
+
+  res.json(exercise);
 });
 
 // GET /api/users/:_id/logs - Retrieve a user's exercise log
