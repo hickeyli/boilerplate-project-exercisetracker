@@ -61,7 +61,7 @@ app.post('/api/users/:_id/exercises', (req, res) => {
     date: exercise.date
   });
 
-  res.json(exercise);
+  res.json(user);
 });
 
 // GET /api/users/:_id/logs - Retrieve a user's exercise log
