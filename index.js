@@ -22,7 +22,7 @@ const exercises = [];
 // POST /api/users - Create a new user
 app.post('/api/users', (req, res) => {
   const username = req.body.username;
-  const userId = uuidv4(); // Generate a unique ID for the user
+  const userId = uuidv4();
 
   const newUser = { username, _id: userId };
   users.push(newUser);
@@ -46,6 +46,10 @@ app.post('/api/users/:_id/exercises', (req, res) => {
   const { description, duration, date } = req.body;
   const exerciseDate = date ? new Date(date) : new Date();
 
+  if (isNaN(exerciseDate.getTime())) {
+    return res.status(400).json({ error: 'Invalid date' });
+  }
+
   const exercise = {
     username: user.username,
     description: description,
@@ -61,7 +65,14 @@ app.post('/api/users/:_id/exercises', (req, res) => {
     date: exercise.date
   });
 
-  res.json(user);
+  // Return the user object with the exercise fields added
+  res.json({
+    _id: user._id,
+    username: user.username,
+    description: exercise.description,
+    duration: exercise.duration,
+    date: exercise.date
+  });
 });
 
 // GET /api/users/:_id/logs - Retrieve a user's exercise log
@@ -83,7 +94,6 @@ app.get('/api/users/:_id/logs', (req, res) => {
       date: ex.date
     }));
 
-  // Filter by date range if provided
   if (from) {
     const fromDate = new Date(from);
     userExercises = userExercises.filter(ex => new Date(ex.date) >= fromDate);
@@ -93,7 +103,6 @@ app.get('/api/users/:_id/logs', (req, res) => {
     userExercises = userExercises.filter(ex => new Date(ex.date) <= toDate);
   }
 
-  // Limit the number of exercises if limit is provided
   if (limit) {
     userExercises = userExercises.slice(0, parseInt(limit));
   }
