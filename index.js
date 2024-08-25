@@ -61,7 +61,7 @@ app.post('/api/users/:_id/exercises', (req, res) => {
   exercises.push({
     userId: user._id,
     description: exercise.description,
-    duration: exercise.duration,
+    duration: Number(exercise.duration),
     date: exercise.date
   });
 
@@ -70,8 +70,8 @@ app.post('/api/users/:_id/exercises', (req, res) => {
     _id: user._id,
     username: user.username,
     description: exercise.description,
-    duration: exercise.duration,
-    date: exercise.date
+    duration: Number(exercise.duration),
+    date: exercise.date.toDateString(),
   });
 });
 
