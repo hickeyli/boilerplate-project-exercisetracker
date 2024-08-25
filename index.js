@@ -71,7 +71,7 @@ app.post('/api/users/:_id/exercises', (req, res) => {
     username: user.username,
     description: exercise.description,
     duration: Number(exercise.duration),
-    date: exercise.date.toDateString(),
+    date: exercise.date,
   });
 });
 
