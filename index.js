@@ -56,11 +56,11 @@ app.post('/api/users/:_id/exercises', (req, res) => {
   exercises.push(exercise);
 
   res.json({
+    _id: user._id,
     username: user.username,
     description: exercise.description,
     duration: exercise.duration,
-    date: exercise.date,
-    _id: user._id
+    date: exercise.date
   });
 });
 
