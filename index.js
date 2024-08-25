@@ -70,8 +70,9 @@ app.post('/api/users/:_id/exercises', (req, res) => {
     _id: user._id,
     username: user.username,
     description: exercise.description,
-    duration: Number(exercise.duration),
+    duration: parseInt(exercise.duration),
     date: exercise.date,
+    
   });
 });
 
